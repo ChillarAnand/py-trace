@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>index</title>
+<meta name="author" content="(Anand Reddy Pandikunta)"/>
+
+<link rel="stylesheet" href="file:///home/anand/.emacs.d/vendor/reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="file:///home/anand/.emacs.d/vendor/reveal.js/css/theme/simple.css" id="theme"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'file:///home/anand/.emacs.d/vendor/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+
+      <div class='footer'>
+      <style>
+       .reveal .footer {
+         position: absolute;
+         bottom: 0.5em;
+         left: 0.5em;
+         font-size: 0.4em;
+       }
+      </style>
+        <span>(c) Anand Reddy Pandikunta 
+            (<a href="http://twitter.com/chillaranand">@chillaranand</a>)
+        </span>
+        <a href="http://www.avilpage.com">http://avilpage.com</a>
+      </div>
+
+<div class="slides">
+
+
+
+</section>
+<section id="sec-0-1" >
+
+<h3>Python Traceback For Humans</h3>
+
+
+</section>
+<section id="sec-0-2" >
+
+<h3>Topics</h3>
+<p>
+What is traceback?
+</p>
+
+<p>
+Default traceback &#x2013;&gt; Colored traceback.
+</p>
+
+<p>
+Things You can do with custom traceback.
+</p>
+
+<p>
+Traceback - The forgotten debugging tool.
+</p>
+
+<p>
+Using Conditionals/Exceptions For Better Traceback
+</p>
+
+
+
+</section>
+<section id="sec-0-3" >
+
+<h3>Traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python">Traceback (most recent call last):
+<span style="background-color: #f2f2f2;"> </span> File <span style="color: #8b2252;">"mail_send.py"</span>, line 25, <span style="color: #a020f0;">in</span> &lt;module&gt;
+<span style="background-color: #f2f2f2;"> </span>   send_mail()
+<span style="background-color: #f2f2f2;"> </span> File <span style="color: #8b2252;">"mail_send.py"</span>, line 21, <span style="color: #a020f0;">in</span> send_mail
+<span style="background-color: #f2f2f2;"> </span>   server.sendmail(fromaddr, toaddrs, msg)
+<span style="background-color: #f2f2f2;"> </span> File <span style="color: #8b2252;">"/usr/local/lib/python2.7/smtplib.py"</span>, line 724, <span style="color: #a020f0;">in</span> sendmail
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">raise</span> SMTPSenderRefused(code, resp, from_addr)
+smtplib.SMTPSenderRefused: (530, <span style="color: #8b2252;">'5.5.1 Authentication Required.'</span>)
+</pre>
+</div>
+
+<p>
+Trigger point
+</p>
+
+<p>
+Cause
+</p>
+
+<p>
+Occurred point
+</p>
+
+
+</section>
+<section id="sec-0-4" >
+
+<h3>Custom Traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">custom_traceback</span>(<span style="color: #483d8b;">type</span>, value, traceback):
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'successfully completed'</span>)
+
+<span style="color: #a020f0;">import</span> sys
+<span style="color: #a0522d;">sys.excepthook</span> = custom_traceback
+</pre>
+</div>
+
+
+</section>
+<section id="sec-0-5" >
+
+<h3>Mimic Python Traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">custom_traceback</span>(et, ev, tb):
+<span style="background-color: #f2f2f2;"> </span>   traceback.print_exception(et, ev, tb)
+
+<span style="color: #a020f0;">import</span> sys
+<span style="color: #a0522d;">sys.excepthook</span> = custom_traceback
+</pre>
+</div>
+
+
+</section>
+<section id="sec-0-6" >
+
+<h3>Colored traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a020f0;">from</span> pygments <span style="color: #a020f0;">import</span> highlight
+<span style="color: #a020f0;">from</span> pygments.formatters <span style="color: #a020f0;">import</span> TerminalFormatter
+<span style="color: #a020f0;">from</span> pygments.lexers <span style="color: #a020f0;">import</span> PythonTracebackLexer
+
+<span style="color: #a020f0;">def</span> <span style="color: #0000ff;">custom_traceback</span>(et, ev, tb):
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">tb</span> = <span style="color: #8b2252;">""</span>.join(traceback.format_exception(et, ev, tb))
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(highlight(code=tb, lexer=PythonTracebackLexer(), formatter=TerminalFormatter()))
+
+<span style="color: #a0522d;">sys.excepthook</span> = custom_traceback
+</pre>
+</div>
+
+
+</section>
+<section id="sec-0-7" >
+
+<h3>General Uses Of Custom Traceback</h3>
+<p>
+IDE - Hyperlinks in traceback/debugger
+</p>
+
+<p>
+iPython - Run buggy code without crashing
+</p>
+
+<p>
+GUI apps - Continue execution even exceptions occur
+</p>
+
+
+</section>
+<section id="sec-0-8" >
+
+<h3>Traceback - The forgotten debugging tool</h3>
+
+
+</section>
+<section id="sec-0-9" >
+
+<h3>State Of Objects</h3>
+
+</section>
+<section id="sec-0-10" >
+
+<h3>Filtering frames</h3>
+
+</section>
+<section id="sec-0-11" >
+
+<h3>More context</h3>
+
+</section>
+<section id="sec-0-12" >
+
+<h3>Locals &amp; Builtins</h3>
+
+
+</section>
+<section id="sec-0-13" >
+
+<h3>Exercise</h3>
+
+
+</section>
+<section id="sec-0-14" >
+
+<h3>Better code -&gt; Better traceback</h3>
+
+</section>
+<section id="sec-0-15" >
+
+<h3>Questions?</h3>
+
+</section>
+
+</div>
+</div>
+
+<script src="file:///home/anand/.emacs.d/vendor/reveal.js/lib/js/head.min.js"></script>
+<script src="file:///home/anand/.emacs.d/vendor/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'file:///home/anand/.emacs.d/vendor/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'file:///home/anand/.emacs.d/vendor/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'file:///home/anand/.emacs.d/vendor/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'file:///home/anand/.emacs.d/vendor/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'file:///home/anand/.emacs.d/vendor/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'file:///home/anand/.emacs.d/vendor/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+]
+});
+</script>
+</body>
+</html>
