@@ -170,44 +170,183 @@ iPython - Run buggy code without crashing
 GUI apps - Continue execution even exceptions occur
 </p>
 
+<p>
+Werkzeug - Interactive debugging
+</p>
+
 
 </section>
 <section id="sec-0-8" >
 
-<h3>Traceback - The forgotten debugging tool</h3>
+<h3>Traceback as the debugging tool</h3>
+
 
 </section>
 <section id="sec-0-9" >
 
-<h3>State Of Objects</h3>
+<h3>The magical print</h3>
+<p>
+Automatically print the value of objects when an exception occurs
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a0522d;">et</span>, <span style="color: #a0522d;">ev</span>, <span style="color: #a0522d;">tb</span> = einfo
+<span style="color: #a0522d;">frame_records</span> = inspect.getinnerframes(tb, context)
+
+<span style="color: #a0522d;">frame</span>, <span style="color: #a0522d;">fname</span>, <span style="color: #a0522d;">lnum</span>, <span style="color: #a0522d;">func</span>, <span style="color: #a0522d;">lines</span>, <span style="color: #a0522d;">index</span> = frame_record
+<span style="color: #a0522d;">args</span>, <span style="color: #a0522d;">varargs</span>, <span style="color: #a0522d;">varkw</span>, <span style="color: #a0522d;">local_vars</span> = inspect.getargvalues(frame)
+
+<span style="color: #a0522d;">objects</span> = cgitb.scanvars(reader, frame, local_vars)
+</pre>
+</div>
+
 
 </section>
 <section id="sec-0-10" >
 
-<h3>Filtering frames</h3>
+<h3>Normal traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python">Traceback (most recent call last):
+<span style="background-color: #f2f2f2;"> </span> File <span style="color: #8b2252;">"magical_print.py"</span>, line 9, <span style="color: #a020f0;">in</span> &lt;module&gt;
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">total</span> = <span style="color: #483d8b;">sum</span>(num1 + num2 + num3)
+<span style="color: #228b22;">TypeError</span>: unsupported operand <span style="color: #483d8b;">type</span>(s) <span style="color: #a020f0;">for</span> +: <span style="color: #8b2252;">'int'</span> <span style="color: #a020f0;">and</span> <span style="color: #8b2252;">'str'</span>
+</pre>
+</div>
 
 </section>
 <section id="sec-0-11" >
 
-<h3>More context</h3>
+<h3>Pretty traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python">Pretty Traceback:
+
+File:      /home/anand/talks/ptb/code/magical_print.py
+Call:      &lt;module&gt;()
+Context:
+---------&gt; 9 <span style="color: #a0522d;">total</span> = <span style="color: #483d8b;">sum</span>(num1 + num2 + num3)
+Objects:   total <span style="color: #a0522d;">undefined</span>, <span style="color: #a0522d;">num1</span> = <span style="color: #a0522d;">1</span>, <span style="color: #a0522d;">num2</span> = <span style="color: #8b2252;">'2'</span>, <span style="color: #a0522d;">num3</span> = 3
+
+<span style="color: #228b22;">TypeError</span>: unsupported operand <span style="color: #483d8b;">type</span>(s) <span style="color: #a020f0;">for</span> +: <span style="color: #8b2252;">'int'</span> <span style="color: #a020f0;">and</span> <span style="color: #8b2252;">'str'</span>
+</pre>
+</div>
+
 
 </section>
 <section id="sec-0-12" >
 
-<h3>Locals &amp; Builtins</h3>
+<h3>Filtering frames</h3>
+<p>
+Most developers are interested in bugs in their code(most of the time)
+</p>
+
+
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a0522d;">et</span>, <span style="color: #a0522d;">ev</span>, <span style="color: #a0522d;">tb</span> = einfo
+<span style="color: #a0522d;">frame_records</span> = inspect.getinnerframes(tb, context)
+
+<span style="color: #a0522d;">frame</span>, <span style="color: #a0522d;">fname</span>, <span style="color: #a0522d;">lnum</span>, <span style="color: #a0522d;">func</span>, <span style="color: #a0522d;">lines</span>, <span style="color: #a0522d;">index</span> = frame_record
+<span style="color: #a020f0;">if</span> project_path <span style="color: #a020f0;">in</span> fname:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">process frame</span>
+</pre>
+</div>
+
+
 
 </section>
 <section id="sec-0-13" >
 
-<h3>Exercise</h3>
+<h3>Django Traceback</h3>
+<img src="./images/filter-frames.png" alt="filter-frames.png" />
+
+
+
 
 </section>
 <section id="sec-0-14" >
 
-<h3>Better code -&gt; Better traceback</h3>
+<h3>More context</h3>
+<p>
+Sometimes looking around might help!
+</p>
+
 
 </section>
 <section id="sec-0-15" >
+
+<h3>Look around</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python">File:      /home/anand/talks/ptb/code/calc_slice.py
+Call:      validate_step(step=<span style="color: #008b8b;">None</span>)
+Context:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   8     <span style="color: #a020f0;">if</span> step == 0:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   9         <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">Exception</span>(<span style="color: #8b2252;">"Step cannot be zero."</span>)
+---------&gt; 10     <span style="color: #a020f0;">if</span> step &lt; 0:
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  11         reverse = <span style="color: #008b8b;">True</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  12     <span style="color: #a020f0;">if</span> step <span style="color: #a020f0;">is</span> <span style="color: #008b8b;">None</span>:
+</pre>
+</div>
+
+
+
+</section>
+<section id="sec-0-16" >
+
+<h3>Is it worth it?</h3>
+<p>
+Time spent on debugging.
+</p>
+
+<p>
+Most common exceptions.
+</p>
+
+
+</section>
+<section id="sec-0-17" >
+
+<h3>Exercise</h3>
+
+
+</section>
+<section id="sec-0-18" >
+
+<h3>Using Conditionals/Exceptions For Better Traceback</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = num / den
+<span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'Zero Division'</span>)
+
+
+<span style="color: #a020f0;">if</span> (den != 0):
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = num / den
+</pre>
+</div>
+
+
+</section>
+<section id="sec-0-19" >
+
+<h3>Exception Chaining</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">read PEP 3134</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">understand exception chaining</span>
+<span style="color: #a020f0;">except</span> LazyToDoThatError:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #b22222;"># </span><span style="color: #b22222;">start using Python 3!!</span>
+</pre>
+</div>
+
+
+</section>
+<section id="sec-0-20" >
 
 <h3>Questions?</h3>
 
