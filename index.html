@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/2.5.0/css/reveal.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/reveal.js/2.5.0/css/theme/simple.css" id="theme"/>
-
+<link rel="stylesheet" href=""/>
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
     if( window.location.search.match( /print-pdf/gi ) ) {
@@ -44,15 +44,13 @@
 
 
 </section>
-<section id="sec-0-1" >
-
-<h3>Python Traceback For Humans</h3>
+<section id="slide-orgheadline1">
+<h3 id="orgheadline1">Python Traceback For Humans</h3>
 
 
 </section>
-<section id="sec-0-2" >
-
-<h3>Topics</h3>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2">Topics</h3>
 <p>
 What is traceback?
 </p>
@@ -70,15 +68,14 @@ Traceback - The forgotten debugging tool.
 </p>
 
 <p>
-Using Conditionals/Exceptions For Better Traceback
+Towards better Better Traceback
 </p>
 
 
 
 </section>
-<section id="sec-0-3" >
-
-<h3>Traceback</h3>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3">Traceback</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python">Traceback (most recent call last):
@@ -97,18 +94,14 @@ Trigger point
 </p>
 
 <p>
-Cause
-</p>
-
-<p>
 Occurred point
 </p>
 
 
-</section>
-<section id="sec-0-4" >
 
-<h3>Custom Traceback</h3>
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4">Custom Traceback</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">custom_traceback</span>(<span style="color: #483d8b;">type</span>, value, traceback):
@@ -121,9 +114,8 @@ Occurred point
 
 
 </section>
-<section id="sec-0-5" >
-
-<h3>Mimic Python Traceback</h3>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Mimic Python Traceback</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><span style="color: #a020f0;">def</span> <span style="color: #0000ff;">custom_traceback</span>(et, ev, tb):
@@ -136,9 +128,8 @@ Occurred point
 
 
 </section>
-<section id="sec-0-6" >
-
-<h3>Colored traceback</h3>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6">Colored traceback</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><span style="color: #a020f0;">from</span> pygments <span style="color: #a020f0;">import</span> highlight
@@ -146,45 +137,74 @@ Occurred point
 <span style="color: #a020f0;">from</span> pygments.lexers <span style="color: #a020f0;">import</span> PythonTracebackLexer
 
 <span style="color: #a020f0;">def</span> <span style="color: #0000ff;">custom_traceback</span>(et, ev, tb):
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">tb</span> = <span style="color: #8b2252;">""</span>.join(traceback.format_exception(et, ev, tb))
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(highlight(code=tb, lexer=PythonTracebackLexer(), formatter=TerminalFormatter()))
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">trace</span> = <span style="color: #8b2252;">""</span>.join(traceback.format_exception(et, ev, tb))
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(highlight(code=trace, lexer=PythonTracebackLexer(), formatter=TerminalFormatter()))
 
 <span style="color: #a0522d;">sys.excepthook</span> = custom_traceback
 </pre>
 </div>
 
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7">Normal Traceback</h3>
+
+<div class="figure">
+<p><img src="./images/tb1.png" alt="tb1.png" />
+</p>
+</div>
 
 </section>
-<section id="sec-0-7" >
+<section id="slide-orgheadline8">
+<h3 id="orgheadline8">Colored Traceback</h3>
 
-<h3>General Uses Of Custom Traceback</h3>
-<p>
-IDE - Hyperlinks in traceback/debugger
+<div class="figure">
+<p><img src="./images/tb2.png" alt="tb2.png" />
 </p>
-
-<p>
-iPython - Run buggy code without crashing
-</p>
-
-<p>
-GUI apps - Continue execution even exceptions occur
-</p>
-
-<p>
-Werkzeug - Interactive debugging
-</p>
+</div>
 
 
 </section>
-<section id="sec-0-8" >
-
-<h3>Traceback as the debugging tool</h3>
+<section id="slide-orgheadline9">
+<h3 id="orgheadline9">General Uses Of Custom Traceback</h3>
 
 
 </section>
-<section id="sec-0-9" >
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">Hyperlinks in IDE/text editors</h3>
 
-<h3>The magical print</h3>
+<div class="figure">
+<p><img src="./images/te.png" alt="te.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">GUI apps - Continue execution even exceptions occur</h3>
+
+<div class="figure">
+<p><img src="./images/gui.png" alt="gui.png" />
+</p>
+</div>
+
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Werkzeug - Interactive debugging</h3>
+
+<div class="figure">
+<p><img src="./images/werk.png" alt="werk.png" />
+</p>
+</div>
+
+
+</section>
+<section id="slide-orgheadline13">
+<h3 id="orgheadline13">Traceback as the debugging tool</h3>
+
+
+</section>
+<section id="slide-orgheadline14">
+<h3 id="orgheadline14">The magical print</h3>
 <p>
 Automatically print the value of objects when an exception occurs
 </p>
@@ -203,9 +223,8 @@ Automatically print the value of objects when an exception occurs
 
 
 </section>
-<section id="sec-0-10" >
-
-<h3>Normal traceback</h3>
+<section id="slide-orgheadline15">
+<h3 id="orgheadline15">Normal traceback</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python">Traceback (most recent call last):
@@ -216,9 +235,8 @@ Automatically print the value of objects when an exception occurs
 </div>
 
 </section>
-<section id="sec-0-11" >
-
-<h3>Pretty traceback</h3>
+<section id="slide-orgheadline16">
+<h3 id="orgheadline16">Pretty traceback</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python">Pretty Traceback:
@@ -226,7 +244,7 @@ Automatically print the value of objects when an exception occurs
 File:      /home/anand/talks/ptb/code/magical_print.py
 Call:      &lt;module&gt;()
 Context:
----------&gt; 9 <span style="color: #a0522d;">total</span> = <span style="color: #483d8b;">sum</span>(num1 + num2 + num3)
+---------&gt; 9 <span style="color: #a0522d;">total</span> = num1 + num2 + num
 Objects:   total <span style="color: #a0522d;">undefined</span>, <span style="color: #a0522d;">num1</span> = <span style="color: #a0522d;">1</span>, <span style="color: #a0522d;">num2</span> = <span style="color: #8b2252;">'2'</span>, <span style="color: #a0522d;">num3</span> = 3
 
 <span style="color: #228b22;">TypeError</span>: unsupported operand <span style="color: #483d8b;">type</span>(s) <span style="color: #a020f0;">for</span> +: <span style="color: #8b2252;">'int'</span> <span style="color: #a020f0;">and</span> <span style="color: #8b2252;">'str'</span>
@@ -235,9 +253,8 @@ Objects:   total <span style="color: #a0522d;">undefined</span>, <span style="co
 
 
 </section>
-<section id="sec-0-12" >
-
-<h3>Filtering frames</h3>
+<section id="slide-orgheadline17">
+<h3 id="orgheadline17">Filtering frames</h3>
 <p>
 Most developers are interested in bugs in their code(most of the time)
 </p>
@@ -257,27 +274,28 @@ Most developers are interested in bugs in their code(most of the time)
 
 
 </section>
-<section id="sec-0-13" >
+<section id="slide-orgheadline18">
+<h3 id="orgheadline18">Django Traceback</h3>
 
-<h3>Django Traceback</h3>
-<img src="https://cloud.githubusercontent.com/assets/4463796/8149375/8b55cba8-12de-11e5-821c-f320fdeba092.png" alt="filter-frames.png" />
+<div class="figure">
+<p><img src="./images/filter-frames.png" alt="filter-frames.png" />
+</p>
+</div>
 
 
 
 
 </section>
-<section id="sec-0-14" >
-
-<h3>More context</h3>
+<section id="slide-orgheadline19">
+<h3 id="orgheadline19">More context</h3>
 <p>
 Sometimes looking around might help!
 </p>
 
 
 </section>
-<section id="sec-0-15" >
-
-<h3>Look around</h3>
+<section id="slide-orgheadline20">
+<h3 id="orgheadline20">Look around</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python">File:      /home/anand/talks/ptb/code/calc_slice.py
@@ -286,7 +304,7 @@ Context:
 <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   8     <span style="color: #a020f0;">if</span> step == 0:
 <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   9         <span style="color: #a020f0;">raise</span> <span style="color: #228b22;">Exception</span>(<span style="color: #8b2252;">"Step cannot be zero."</span>)
 ---------&gt; 10     <span style="color: #a020f0;">if</span> step &lt; 0:
-<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  11         reverse = <span style="color: #008b8b;">True</span>
+<span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  11         <span style="color: #a0522d;">reverse</span> = <span style="color: #008b8b;">True</span>
 <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>   <span style="background-color: #f2f2f2;"> </span>  12     <span style="color: #a020f0;">if</span> step <span style="color: #a020f0;">is</span> <span style="color: #008b8b;">None</span>:
 </pre>
 </div>
@@ -294,46 +312,67 @@ Context:
 
 
 </section>
-<section id="sec-0-16" >
-
-<h3>Is it worth it?</h3>
+<section id="slide-orgheadline21">
+<h3 id="orgheadline21">Is it worth it?</h3>
 <p>
-Time spent on debugging.
+Magical print
 </p>
 
 <p>
-Most common exceptions.
+Filtering frames
 </p>
 
+<p>
+More context
+</p>
 
 </section>
-<section id="sec-0-17" >
+<section id="slide-orgheadline22">
+<h3 id="orgheadline22">Excercise</h3>
 
-<h3>Exercise</h3>
+</section>
+<section id="slide-orgheadline23">
+<h3 id="orgheadline23">Before filtering frames</h3>
+
+<div class="figure">
+<p><img src="./images/52.png" alt="52.png" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline24">
+<h3 id="orgheadline24">After filtering frames</h3>
+
+<div class="figure">
+<p><img src="./images/25.png" alt="25.png" />
+</p>
+</div>
 
 
 </section>
-<section id="sec-0-18" >
+<section id="slide-orgheadline25">
+<h3 id="orgheadline25">Towards  better traceback</h3>
 
-<h3>Using Conditionals/Exceptions For Better Traceback</h3>
+</section>
+<section id="slide-orgheadline26">
+<h3 id="orgheadline26">Use exceptions/conditionals for better stack trace</h3>
 <div class="org-src-container">
 
-<pre  class="src src-python"><span style="color: #a020f0;">try</span>:
+<pre  class="src src-python"><span style="color: #a020f0;">if</span> (den != 0):
 <span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = num / den
-<span style="color: #a020f0;">except</span> <span style="color: #228b22;">ZeroDivisionError</span>:
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'Zero Division'</span>)
 
 
-<span style="color: #a020f0;">if</span> (den != 0):
-<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">result</span> = num / den
+<span style="color: #a020f0;">try</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a0522d;">fh</span> = <span style="color: #483d8b;">open</span>(<span style="color: #8b2252;">'pycon.txt'</span>)
+<span style="color: #a020f0;">except</span> <span style="color: #228b22;">IOError</span>:
+<span style="background-color: #f2f2f2;"> </span>   <span style="color: #a020f0;">print</span>(<span style="color: #8b2252;">'File not found'</span>)
 </pre>
 </div>
 
 
 </section>
-<section id="sec-0-19" >
-
-<h3>Exception Chaining</h3>
+<section id="slide-orgheadline27">
+<h3 id="orgheadline27">Chain exceptions</h3>
 <div class="org-src-container">
 
 <pre  class="src src-python"><span style="color: #a020f0;">try</span>:
@@ -346,15 +385,26 @@ Most common exceptions.
 
 
 </section>
-<section id="sec-0-20" >
+<section id="slide-orgheadline28">
+<h3 id="orgheadline28">Summary</h3>
+<p>
+You can customize traceback as you need.
+</p>
 
-<h3>Questions?</h3>
+<p>
+Zoomout unnecessary info &amp; zoomin necessary info.
+</p>
+
+
 
 </section>
+<section id="slide-orgheadline29">
+<h3 id="orgheadline29">Questions?</h3>
 
+</section>
+</section>
 </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/reveal.js/2.5.0/lib/js/head.min.js"></script>
 <script src="https://cdn.jsdelivr.net/reveal.js/2.5.0/js/reveal.js"></script>
 
@@ -381,15 +431,6 @@ multiplex: {
     url: '' // Location of socket.io server
 },
 
-// Optional libraries used to extend on reveal.js
-dependencies: [
- { src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
- { src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: 'https://cdn.jsdelivr.net/reveal.js/2.5.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-]
 });
 </script>
 </body>

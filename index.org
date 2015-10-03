@@ -1,0 +1,253 @@
+#+STARTUP: showall
+
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil reveal_mathjax:t
+
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/2.5.0/
+
+#+REVEAL_TRANS: linear
+#+REVEAL-SLIDE-NUMBER: t
+#+REVEAL_THEME: simple
+
+#+BIND: org-confirm-babel-evaluate nil
+
+
+** Python Traceback For Humans
+
+
+** Topics
+
+What is traceback?
+
+Default traceback --> Colored traceback.
+
+Things You can do with custom traceback.
+
+Traceback - The forgotten debugging tool.
+
+Towards better Better Traceback
+
+
+
+** Traceback
+
+#+begin_SRC python
+Traceback (most recent call last):
+  File "mail_send.py", line 25, in <module>
+    send_mail()
+  File "mail_send.py", line 21, in send_mail
+    server.sendmail(fromaddr, toaddrs, msg)
+  File "/usr/local/lib/python2.7/smtplib.py", line 724, in sendmail
+    raise SMTPSenderRefused(code, resp, from_addr)
+smtplib.SMTPSenderRefused: (530, '5.5.1 Authentication Required.')
+#+end_src
+
+Trigger point
+
+Occurred point
+
+
+
+** Custom Traceback
+
+#+begin_SRC python
+def custom_traceback(type, value, traceback):
+    print('successfully completed')
+
+import sys
+sys.excepthook = custom_traceback
+#+end_src
+
+
+** Mimic Python Traceback
+
+#+begin_src python
+def custom_traceback(et, ev, tb):
+    traceback.print_exception(et, ev, tb)
+
+import sys
+sys.excepthook = custom_traceback
+#+end_src
+
+
+** Colored traceback
+
+#+begin_src python
+from pygments import highlight
+from pygments.formatters import TerminalFormatter
+from pygments.lexers import PythonTracebackLexer
+
+def custom_traceback(et, ev, tb):
+    trace = "".join(traceback.format_exception(et, ev, tb))
+    print(highlight(code=trace, lexer=PythonTracebackLexer(), formatter=TerminalFormatter()))
+
+sys.excepthook = custom_traceback
+#+end_src
+
+** Normal Traceback
+
+[[./images/tb1.png]]
+
+** Colored Traceback
+
+[[./images/tb2.png]]
+
+
+** General Uses Of Custom Traceback
+
+
+** Hyperlinks in IDE/text editors
+
+[[./images/te.png]]
+
+** GUI apps - Continue execution even exceptions occur
+
+[[./images/gui.png]]
+
+
+** Werkzeug - Interactive debugging
+
+[[./images/werk.png]]
+
+
+** Traceback as the debugging tool
+
+
+** The magical print
+Automatically print the value of objects when an exception occurs
+
+#+begin_src python
+et, ev, tb = einfo
+frame_records = inspect.getinnerframes(tb, context)
+
+frame, fname, lnum, func, lines, index = frame_record
+args, varargs, varkw, local_vars = inspect.getargvalues(frame)
+
+objects = cgitb.scanvars(reader, frame, local_vars)
+#+end_src
+
+
+** Normal traceback
+
+#+begin_src python
+Traceback (most recent call last):
+  File "magical_print.py", line 9, in <module>
+    total = sum(num1 + num2 + num3)
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+#+end_src
+
+** Pretty traceback
+
+#+begin_src python
+Pretty Traceback:
+
+File:      /home/anand/talks/ptb/code/magical_print.py
+Call:      <module>()
+Context:
+---------> 9 total = num1 + num2 + num
+Objects:   total undefined, num1 = 1, num2 = '2', num3 = 3
+
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+#+end_src
+
+
+** Filtering frames
+
+Most developers are interested in bugs in their code(most of the time)
+
+
+#+begin_src python
+et, ev, tb = einfo
+frame_records = inspect.getinnerframes(tb, context)
+
+frame, fname, lnum, func, lines, index = frame_record
+if project_path in fname:
+    # process frame
+#+end_src
+
+
+
+** Django Traceback
+
+[[./images/filter-frames.png]]
+
+
+
+
+** More context
+
+Sometimes looking around might help!
+
+
+** Look around
+
+#+begin_src python
+File:      /home/anand/talks/ptb/code/calc_slice.py
+Call:      validate_step(step=None)
+Context:
+            8     if step == 0:
+            9         raise Exception("Step cannot be zero.")
+---------> 10     if step < 0:
+           11         reverse = True
+           12     if step is None:
+#+end_src
+
+
+
+** Is it worth it?
+
+Magical print
+
+Filtering frames
+
+More context
+
+** Excercise
+
+** Before filtering frames
+
+[[./images/52.png]]
+
+** After filtering frames
+
+[[./images/25.png]]
+
+
+** Towards  better traceback
+
+** Use exceptions/conditionals for better stack trace
+
+#+begin_src python
+if (den != 0):
+    result = num / den
+
+
+try:
+    fh = open('pycon.txt')
+except IOError:
+    print('File not found')
+#+end_src
+
+
+** Chain exceptions
+
+#+begin_src python
+try:
+    # read PEP 3134
+    # understand exception chaining
+except LazyToDoThatError:
+    # start using Python 3!!
+#+end_src
+
+
+** Summary
+
+You can customize traceback as you need.
+
+Zoomout unnecessary info & zoomin necessary info.
+
+
+
+** Questions?
+
+* test

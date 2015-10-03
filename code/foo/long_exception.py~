@@ -1,0 +1,27 @@
+def mul():
+    try:
+        res = 1 / 0
+    except ZeroDivisionError:
+        print('zde')
+    
+
+def div():
+    mul()
+
+def barfoo():
+    div()
+
+def foobar():
+    barfoo()
+
+def baz():
+    foobar()
+
+def bar():
+    baz()
+
+def foo():
+    bar()
+
+
+foo()
